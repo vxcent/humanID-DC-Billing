@@ -14,6 +14,16 @@
     "nodemon": "^2.0.12"
   },
   "dependencies": {
-    "express": "^4.17.1"
-  }
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vxcent/humanID-DC-Billing.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/vxcent/humanID-DC-Billing/issues"
+  },
+  "homepage": "https://github.com/vxcent/humanID-DC-Billing#readme"
 }
