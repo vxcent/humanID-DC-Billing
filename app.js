@@ -16,7 +16,7 @@ connection.query('SELECT * FROM bills', (err, rows) => {
     console.log("Data received from DB:");
     console.log(rows);
 })
-// const app = express();
+
 
 // app.use((req, res, next) => {
 //     console.log('In the middleware!');
