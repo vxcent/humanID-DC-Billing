@@ -51,19 +51,51 @@ CREATE TABLE Payments
     version BIGINT(8)
 );
 
+
+
 CREATE TABLE Project_Details
 (
 	id BIGINT(20) PRIMARY KEY,
     projectExtId VARCHAR(255) NOT NULL,
-    balance FLOAT(20) NOT NULL,
-    marginUsdRate FLOAT(20) NOT NULL,
-    reserveBalanceThreashold FLOAT(20) NOT NULL,
-    balanceWarningThreshold FLOAT(20) NOT NULL,
+    balance FLOAT(20),
+    marginUsdRate FLOAT(20),
+    reserveBalanceThreashold FLOAT(20),
+    balanceWarningThreshold FLOAT(20),
     createdAt DATETIME,
     updatedAt DATETIME,
     modifiedBy JSON,
-    version BIGINT(8)
+    version_number BIGINT(8)
 );
+INSERT INTO project_details VALUES (
+	1,
+    'TEST',
+    1000,
+    0.25,
+    50,
+    30,
+    '2021-09-30 10:34:09',
+    '2021-09-30 10:34:09',
+    null,
+    9
+)
+
+INSERT INTO project_details VALUES (
+	2,
+    'CLB',
+    6,
+    0.66,
+    60,
+    69,
+    '2021-09-30 10:34:09',
+    '2021-09-30 10:34:09',
+    [{
+	  "ok": true,
+	   "id": "51,100",
+		"x": 51,
+		"y": 100
+	}],
+    9
+)
 
 CREATE TABLE Project_Client_Emails
 (

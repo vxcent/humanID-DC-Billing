@@ -11,7 +11,7 @@ connection.connect((err) => {
     if (err) throw err;
     console.log('Connection Established')
 })
-connection.query('SELECT * FROM bills', (err, rows) => {
+connection.query('SELECT * FROM project_details', (err, rows) => {
     if (err) throw err;
     console.log("Data received from DB:");
     console.log(rows);
