@@ -31,7 +31,7 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
 const app = express();
-app.use(...);
+//app.use(...);
 
 const db = require("./app/models");
 
