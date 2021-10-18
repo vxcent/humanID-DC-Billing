@@ -1,18 +1,42 @@
 
 const express = require('express');
-const app = express();
 const mysql = require('mysql2');
+const cors = require("cors");
 
+const app = express();
 
-const connection = mysql.createConnection({
-    host: "localhost",
-    user: 'root',
-    password: 'humanIDDB2021!!',
-    database: 'billing_db'
-})
-app.listen(3000, () => console.log('Listening on port 3000'));
+var corsOptions = {
+    origin: "http://localhost:8081"
+};
+  
+app.use(cors(corsOptions));
+  
+// parse requests of content-type - application/json
+app.use(express.json());
+  
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
+  
+// simple route
+app.get("/", (req, res) => {
+    res.json({ message: "Welcome to Billing DB API." });
+});
+  
+// set port, listen for requests
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}.`);
+});
+const app = express();
+app.use(...);
 
-app.get('/project/billingdetails/:projectExtId/limit/:limit/skip/:skip', (req, res) => {
+const db = require("./app/models");
+
+db.sequelize.sync({ force: true }).then(() => {
+    console.log("Drop and re-sync db.");
+});
+
+app.get('/console/project/?limit=&skip&billingdetails/:projectExtId/limit/:limit/skip/:skip', (req, res) => {
     var projectId = req.params.projectExtId;
     //const limit = req.params.limit;
     //const skip = req.params.skip;

@@ -1,15 +1,35 @@
 {
-  "name": "express",
+  "name": "express-express-sequelize-mysql",
   "version": "1.0.0",
-  "description": "",
+  "description": "BillingDB API written with Express, Sequelize, and MySQL.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "nodejs",
+    "express",
+    "rest",
+    "api",
+    "sequelize",
+    "mysql"
+  ],
+  "author": "Vincent Xu",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
-  }
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mysql2": "^2.3.0",
+    "sequelize": "^6.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vxcent/humanID-DC-Billing.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vxcent/humanID-DC-Billing/issues"
+  },
+  "homepage": "https://github.com/vxcent/humanID-DC-Billing#readme"
 }
