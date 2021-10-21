@@ -1,5 +1,5 @@
 const db = require("../models");
-const project = db.project;
+const Project = db.project;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Tutorial
@@ -25,7 +25,7 @@ exports.create = (req, res) => {
       };
     
       // Save Tutorial in the database
-      project.create(tutorial)
+      Project.create(project)
         .then(data => {
           res.send(data);
         })
@@ -35,14 +35,16 @@ exports.create = (req, res) => {
               err.message || "Some error occurred while creating the Tutorial."
           });
         });
+};
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  project.findAll({ where: condition })
+  Project.findAll({ where: condition })
     .then(data => {
+      console.log("test");
       res.send(data);
     })
     .catch(err => {
@@ -57,7 +59,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  project.findByPk(id)
+  Project.findByPk(id)
     .then(data => {
       if (data) {
         res.send(data);
@@ -78,7 +80,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  project.update(req.body, {
+  Project.update(req.body, {
     where: { id: id }
   })
     .then(num => {
@@ -103,7 +105,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  project.destroy({
+  Project.destroy({
     where: { id: id }
   })
     .then(num => {
@@ -126,7 +128,7 @@ exports.delete = (req, res) => {
 
 // Delete all Tutorials from the database.
 exports.deleteAll = (req, res) => {
-  project.destroy({
+  Project.destroy({
     where: {},
     truncate: false
   })
@@ -143,7 +145,7 @@ exports.deleteAll = (req, res) => {
 
 // Find all published Tutorials
 exports.findAllPublished = (req, res) => {
-  project.findAll({ where: { published: true } })
+  Project.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
     })
@@ -154,4 +156,3 @@ exports.findAllPublished = (req, res) => {
       });
     });
 };
-}
