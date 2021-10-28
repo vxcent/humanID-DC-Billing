@@ -1,21 +1,21 @@
 const db = require("../models");
-const Project = db.project;
+const Client = db.client;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
     if (!req.body.title) {
         res.status(400).send({
-          message: "Project can not be empty!"
+          message: "client can not be empty!"
         });
         return;
     };
 
-    const project = {
+    const client = {
       id: req.body.id,
       projectExtID: req.body.projectExtId,
-      balance: req.body.balance,
-      marginUsdRate: req.body.marginUsdRate,
+      clientEmail: req.body.balance,
+      clientName: req.body.marginUsdRate,
       reserveBalanceThreshold: req.body.reserveBalanceThreshold,
       balanceWarningThrewshold: req.body.balanceWarningThrewshold,
       createdAt: req.body.createdAt,
@@ -25,14 +25,14 @@ exports.create = (req, res) => {
     };
     
       // Save Tutorial in the database
-      Project.create(project)
+      Client.create(client)
         .then(data => {
           res.send(data);
         })
         .catch(err => {
           res.status(500).send({
             message:
-              err.message || "Some error occurred while creating the project."
+              err.message || "Some error occurred while creating the client."
           });
         });
 };
@@ -42,7 +42,7 @@ exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Project.findAll({ where: condition })
+  Client.findAll({ where: condition })
     .then(data => {
       console.log("test");
       res.send(data);
@@ -50,7 +50,7 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while retrieving clients."
       });
     });
 };
@@ -59,19 +59,19 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Project.findByPk(id)
+  Client.findByPk(id)
     .then(data => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Tutorial with id=${id}.`
+          message: `Cannot find client with id=${id}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Tutorial with id=" + id
+        message: "Error retrieving client with id=" + id
       });
     });
 };
@@ -80,23 +80,23 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Project.update(req.body, {
+  Client.update(req.body, {
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Tutorial was updated successfully."
+          message: "Client was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+          message: `Cannot update Client with id=${id}. Maybe Client was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Tutorial with id=" + id
+        message: "Error updating Client with id=" + id
       });
     });
 };
@@ -105,30 +105,30 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Project.destroy({
+  Client.destroy({
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Tutorial was deleted successfully!"
+          message: "Client was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+          message: `Cannot delete Client with id=${id}. Maybe Tutorial was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Tutorial with id=" + id
+        message: "Could not delete Client with id=" + id
       });
     });
 };
 
 // Delete all Tutorials from the database.
 exports.deleteAll = (req, res) => {
-  Project.destroy({
+  Client.destroy({
     where: {},
     truncate: false
   })
@@ -145,7 +145,7 @@ exports.deleteAll = (req, res) => {
 
 // Find all published Tutorials
 exports.findAllPublished = (req, res) => {
-  Project.findAll({ where: { published: true } })
+  Client.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
     })
