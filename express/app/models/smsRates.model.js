@@ -33,5 +33,5 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    return smsRATE;
+    return smsRates;
   };

@@ -1,46 +1,50 @@
 const db = require("../models");
-const Client = db.client;
+const Payments = db.Payments;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new client
+// Create and Save a new payments
 exports.create = (req, res) => {
     if (!req.body.title) {
         res.status(400).send({
-          message: "client can not be empty!"
+          message: "Balance Log can not be empty!"
         });
         return;
     };
 
-    const client = {
+    const payments = {
       id: req.body.id,
       projectExtID: req.body.projectExtId,
-      clientEmail: req.body.clientEmail,
-      clientName: req.body.clientName,
+      logType: req.body.logType,
+      date: req.body.date,
+      balance: req.body.balance,
+      numSms: req.body.numSms,
+      reserveBalanceThreshold: req.body.reserveBalanceThreshold,
+      balanceWarningThreshold: req.body.balanceWarningThreshold,
       createdAt: req.body.createdAt,
       updatedAt: req.body.updatedAt,
       modiefiedBy: req.body.modiefiedBy,
       version: req.body.version
     };
     
-      // Save client in the database
-      Client.create(client)
+      // Save payments in the database
+      Payments.create(payments)
         .then(data => {
           res.send(data);
         })
         .catch(err => {
           res.status(500).send({
             message:
-              err.message || "Some error occurred while creating the client."
+              err.message || "Some error occurred while creating the payments."
           });
         });
 };
 
-// Retrieve all clients from the database.
+// Retrieve all paymentss from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Client.findAll({ where: condition })
+  Payments.findAll({ where: condition })
     .then(data => {
       console.log("test");
       res.send(data);
@@ -48,109 +52,109 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving clients."
+          err.message || "Some error occurred while retrieving paymentss."
       });
     });
 };
 
-// Find a single client with an id
+// Find a single payments with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Client.findByPk(id)
+  Payments.findByPk(id)
     .then(data => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find client with id=${id}.`
+          message: `Cannot find payments with id=${id}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving client with id=" + id
+        message: "Error retrieving payments with id=" + id
       });
     });
 };
 
-// Update a client by the id in the request
+// Update a payments by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Client.update(req.body, {
+  Payments.update(req.body, {
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Client was updated successfully."
+          message: "payments was updated successfully."
         });
       } else {
         res.send({
-          message: `Cannot update Client with id=${id}. Maybe Client was not found or req.body is empty!`
+          message: `Cannot update payments with id=${id}. Maybe payments was not found or req.body is empty!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Client with id=" + id
+        message: "Error updating payments with id=" + id
       });
     });
 };
 
-// Delete a client with the specified id in the request
+// Delete a payments with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Client.destroy({
+  Payments.destroy({
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Client was deleted successfully!"
+          message: "payments was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete Client with id=${id}. Maybe client was not found!`
+          message: `Cannot delete payments with id=${id}. Maybe payments was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Client with id=" + id
+        message: "Could not delete payments with id=" + id
       });
     });
 };
 
-// Delete all clients from the database.
+// Delete all paymentss from the database.
 exports.deleteAll = (req, res) => {
-  Client.destroy({
+  Payments.destroy({
     where: {},
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} clients were deleted successfully!` });
+      res.send({ message: `${nums} paymentss were deleted successfully!` });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all clients."
+          err.message || "Some error occurred while removing all paymentss."
       });
     });
 };
 
-// Find all published clients
+// Find all published paymentss
 exports.findAllPublished = (req, res) => {
-  Client.findAll({ where: { published: true } })
+  Payments.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving clients."
+          err.message || "Some error occurred while retrieving paymentss."
       });
     });
 };

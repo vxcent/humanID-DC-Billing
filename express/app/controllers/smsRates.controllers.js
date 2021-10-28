@@ -1,21 +1,25 @@
 const db = require("../models");
-const Client = db.client;
+const smsRates = db.smsRates;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new client
 exports.create = (req, res) => {
     if (!req.body.title) {
         res.status(400).send({
-          message: "client can not be empty!"
+          message: "Balance Log can not be empty!"
         });
         return;
     };
 
-    const client = {
+    const smsRates = {
       id: req.body.id,
       projectExtID: req.body.projectExtId,
-      clientEmail: req.body.clientEmail,
-      clientName: req.body.clientName,
+      logType: req.body.logType,
+      date: req.body.date,
+      balance: req.body.balance,
+      numSms: req.body.numSms,
+      reserveBalanceThreshold: req.body.reserveBalanceThreshold,
+      balanceWarningThreshold: req.body.balanceWarningThreshold,
       createdAt: req.body.createdAt,
       updatedAt: req.body.updatedAt,
       modiefiedBy: req.body.modiefiedBy,
@@ -23,7 +27,7 @@ exports.create = (req, res) => {
     };
     
       // Save client in the database
-      Client.create(client)
+      smsRates.create(smsRates)
         .then(data => {
           res.send(data);
         })
@@ -40,7 +44,7 @@ exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-  Client.findAll({ where: condition })
+  smsRates.findAll({ where: condition })
     .then(data => {
       console.log("test");
       res.send(data);
@@ -57,7 +61,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Client.findByPk(id)
+  smsRates.findByPk(id)
     .then(data => {
       if (data) {
         res.send(data);
@@ -78,7 +82,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Client.update(req.body, {
+  smsRates.update(req.body, {
     where: { id: id }
   })
     .then(num => {
@@ -103,7 +107,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Client.destroy({
+  smsRates.destroy({
     where: { id: id }
   })
     .then(num => {
@@ -126,7 +130,7 @@ exports.delete = (req, res) => {
 
 // Delete all clients from the database.
 exports.deleteAll = (req, res) => {
-  Client.destroy({
+  smsRates.destroy({
     where: {},
     truncate: false
   })
@@ -143,7 +147,7 @@ exports.deleteAll = (req, res) => {
 
 // Find all published clients
 exports.findAllPublished = (req, res) => {
-  Client.findAll({ where: { published: true } })
+  smsRates.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
     })
