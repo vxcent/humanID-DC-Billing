@@ -26,6 +26,13 @@ app.get("/", (req, res) => {
 });
   
 require("./app/routes/project.routes")(app);
+require("./app/routes/balanceLog.routes")(app);
+require("./app/routes/bills.routes")(app);
+require("./app/routes/client.routes")(app);
+require("./app/routes/payments.routes")(app);
+require("./app/routes/sms.routes")(app);
+require("./app/routes/smsRates.routes")(app);
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 

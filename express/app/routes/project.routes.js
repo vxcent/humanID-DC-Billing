@@ -24,5 +24,5 @@ module.exports = app => {
     // Delete all Tutorials
     router.delete("/", project.deleteAll);
   
-    app.use('/api/projects', router);
+    app.use('/api/createProject', router);
   };
