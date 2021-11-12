@@ -1,5 +1,5 @@
 const db = require("../models");
-const Payments = db.Payments;
+const Payments = db.payments;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new payments
