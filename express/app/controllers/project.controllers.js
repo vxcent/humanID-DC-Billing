@@ -4,7 +4,7 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
-    if (!req.body.title) {
+    if (!req.body.id) {
         res.status(400).send({
           message: "Project can not be empty!"
         });
@@ -17,7 +17,7 @@ exports.create = (req, res) => {
       balance: req.body.balance,
       marginUsdRate: req.body.marginUsdRate,
       reserveBalanceThreshold: req.body.reserveBalanceThreshold,
-      balanceWarningThrewshold: req.body.balanceWarningThrewshold,
+      balanceWarningThreshold: req.body.balanceWarningThreshold,
       createdAt: req.body.createdAt,
       updatedAt: req.body.updatedAt,
       modiefiedBy: req.body.modiefiedBy,
@@ -25,16 +25,16 @@ exports.create = (req, res) => {
     };
     
       // Save Tutorial in the database
-      Project.create(project)
-        .then(data => {
-          res.send(data);
-        })
-        .catch(err => {
-          res.status(500).send({
-            message:
-              err.message || "Some error occurred while creating the project."
-          });
+    Project.create(project)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the project."
         });
+      });
 };
 
 // Retrieve all Tutorials from the database.
