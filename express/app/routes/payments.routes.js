@@ -1,26 +1,25 @@
 module.exports = app => {
-    const project = require("../controllers/project.controllers.js");
     const payments = require("../controllers/payments.controllers.js");
+  
     var router = require("express").Router();
   
     // Create a new Tutorial
-    router.post("/createProject", project.create);
     router.post("/createPayment", payments.create);
   
     // Retrieve all Tutorials
-    router.get("/allProject", project.findAll);
+    router.get("/addProjectBalance", payments.findAll);
   
     // Retrieve all published Tutorials
-    router.get("/published", project.findAllPublished);
+    router.get("/published", payments.findAllPublished);
   
     // Retrieve a single Tutorial with id
-    router.get("/projectDetails", project.findOne);
+    router.get("/projectDetails", payments.findOne);
   
     // Update a Tutorial with id
-    router.put("/:id", project.update);
+    router.put("/:id", payments.update);
   
     // Delete a Tutorial with id
-    router.delete("/deleteProject", project.delete);
+    router.delete("/deleteProject", payments.delete);
   
   
     app.use('/console', router);

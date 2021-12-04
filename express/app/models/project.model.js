@@ -5,7 +5,7 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true
       },
       projectExtID: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(512)
       },
       balance: {
         type: Sequelize.FLOAT

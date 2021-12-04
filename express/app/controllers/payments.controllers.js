@@ -4,39 +4,43 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new payments
 exports.create = (req, res) => {
-    if (!req.body.title) {
+    if (!req.body.id) {
         res.status(400).send({
           message: "Balance Log can not be empty!"
         });
         return;
     };
 
-    const payments = {
+    const payment = {
       id: req.body.id,
       projectExtID: req.body.projectExtId,
-      logType: req.body.logType,
-      date: req.body.date,
-      balance: req.body.balance,
-      numSms: req.body.numSms,
-      reserveBalanceThreshold: req.body.reserveBalanceThreshold,
-      balanceWarningThreshold: req.body.balanceWarningThreshold,
+      stripeId: req.body.stripeId,
+      submittedAt: req.body.submittedAt,
+      processedAt: req.body.processedAt,
+      amount: req.body.amount,
+      // beforeBalance: req.body.beforeBalance,
+      // afterBalance: req.body.afterBalance,
+      paymentInfo: req.body.paymentInfo,
+      autoPayment: req.body.autoPayment,
+      client_email: req.body.client_email,
+      client_name: req.body.client_name,
       createdAt: req.body.createdAt,
       updatedAt: req.body.updatedAt,
-      modiefiedBy: req.body.modiefiedBy,
+      modifiedBy: req.body.modifiedBy,
       version: req.body.version
     };
     
       // Save payments in the database
-      Payments.create(payments)
-        .then(data => {
-          res.send(data);
-        })
-        .catch(err => {
-          res.status(500).send({
-            message:
-              err.message || "Some error occurred while creating the payments."
-          });
+    Payments.create(payment)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the payment."
         });
+      });
 };
 
 // Retrieve all paymentss from the database.
@@ -58,10 +62,10 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single payments with an id
-exports.findOne = (req, res) => {
-  const id = req.params.id;
-
-  Payments.findByPk(id)
+exports.findAll = (req, res) => {
+  const projectId = req.params.projectExtID;
+  const limit = req.params.limit;
+  Payments.finAll({where: {projectExtID : projectId}}, {limit: limit})
     .then(data => {
       if (data) {
         res.send(data);

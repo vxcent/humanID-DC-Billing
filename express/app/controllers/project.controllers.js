@@ -13,7 +13,7 @@ exports.create = (req, res) => {
 
     const project = {
       id: req.body.id,
-      projectExtID: req.body.projectExtId,
+      projectExtID: req.body.projectExtID,
       balance: req.body.balance,
       marginUsdRate: req.body.marginUsdRate,
       reserveBalanceThreshold: req.body.reserveBalanceThreshold,
@@ -57,21 +57,22 @@ exports.findAll = (req, res) => {
 
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
-  const id = req.params.id;
-
-  Project.findByPk(id)
+  const projectExtID = req.params.projectExtID;
+  var condition = projectExtID ? { projectExtID: { [Op.like]: `%${projectExtID}%` } } : null;
+  // const limit = req.params.limit;
+  Project.findOne({where: condition})
     .then(data => {
       if (data) {
         res.send(data);
       } else {
         res.status(404).send({
-          message: `Cannot find Tutorial with id=${id}.`
+          message: `Cannot find projectId=${projectExtID}.`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Tutorial with id=" + id
+        message: "Error retrieving "+ projectExtID
       });
     });
 };
@@ -103,10 +104,10 @@ exports.update = (req, res) => {
 
 // Delete a Tutorial with the specified id in the request
 exports.delete = (req, res) => {
-  const id = req.params.id;
+  const projectId = req.params.projectExtID;
 
   Project.destroy({
-    where: { id: id }
+    where: { projectExtID: projectExtID }
   })
     .then(num => {
       if (num == 1) {

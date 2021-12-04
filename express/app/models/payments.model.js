@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const payment = sequelize.define("payment", {
+    const payments = sequelize.define("payments", {
       id: {
         type: Sequelize.BIGINT,
         primaryKey: true
@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
       projectExtID: {
         type: Sequelize.STRING
       },
-      StripeId: {
+      stripeId: {
         type: Sequelize.STRING
       },
       submittedAt: {
@@ -17,13 +17,13 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DATE
       },
       amount: {
-        type: Sequelize.FLOAT
+        type: Sequelize.BIGINT
       },
       beforeBalance: {
-        type: Sequelize.FLOAT
+        type: Sequelize.BIGINT
       },
       afterBalance: {
-        type: Sequelize.FLOAT
+        type: Sequelize.BIGINT
       },
       paymentInfo: {
         type: Sequelize.STRING
@@ -51,5 +51,5 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    return payment;
+    return payments;
   };
